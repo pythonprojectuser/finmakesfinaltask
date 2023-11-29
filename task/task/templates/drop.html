@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information Form</title>
+    <style>
+        *{
+        margin: 0;
+        padding: 0;
+        box-sizing :border-box;
+        }
+        body {
+        min-height: 100vh;
+        display : flex;
+        font-family: sans-serif;
+        }
+        .container
+        {
+        margin:auto;
+        width:500px;
+        max-width:90%;
+        }
+        .container form{
+        width:100%:
+        height:100%;
+        padding:20px;
+        background:white;
+        border-radius: 4px;
+        box-shadow: 0 8px 16px rgba(0,0,0,.3);
+        }
+        .container form h1{
+        text-align:center;
+        margin-bottom:24px;
+        color:#222;
+        }
+        .container form .form-control{
+        width:100%;
+        height:40px;
+        background:white;
+        border-radius:4px;
+        border:1px solid silver;
+        margin:10px 0 18px 0;
+        padding:0 10px;
+        }
+        .container form .btn{
+        margin-left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 34px;
+        border: none;
+        outline :none;
+        background: blue;
+        cursor: pointer;
+        font-size: 16px;
+        text-transform: uppercase;
+        color: white;
+        border-radius: 4px;
+        transition: .3s;
+        }
+        .container form .btn:hover{
+        opacity: .7;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">CollegeStore</a>
+
+</nav>
+<div class="container">
+    <form method="POST" action="drop">
+        {% csrf_token %}
+        <h1>Student Information Form</h1>
+        <!-- Name input -->
+        <label class="form-control" for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <br>
+        <label class="form-control" for="dob">DOB:</label>
+        <input type="date" id="dob" name="dob" required>
+        <br><br>
+
+        <label class="form-control" for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+        <br>
+        <br>
+        <label class="form-control">Gender</label><br>
+        <label for="exampleRadios1"> Male</label>
+        <input  type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+
+
+        <label class="form-check-label" for="exampleRadios2">Female</label>
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" required><br>
+        <br><br>
+         <label class="form-control"  >PhoneNumber</label>
+
+         <input type="phone"  maxlength="10" id="phone1" name="phone" required>
+        <br><br>
+        <label class="form-control" for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br><br>
+
+        <label class="form-control" for="address">Address:</label>
+        <input type="text" id="address" name="address" required>
+        <br><br>
+
+
+
+
+        <!-- Department dropdown -->
+        <label class="form-control" for="department">Department:</label>
+        <select id="department" name="department" onchange="updateCourses()" required>
+            <option value="" selected disabled>Select Department</option>
+            <option value="CS">ComputerScience</option>
+            <option value="CC">Commerce</option>
+            <option value="EE">Electrical Engineering</option>
+            <!-- Add more departments as needed -->
+        </select>
+        <br><br>
+
+        <!-- Course dropdown (dependent on department) -->
+        <label class="form-control" for="course">Course:</label>
+        <select id="course" name="course" required>
+            <option value="" selected disabled>Select Course</option>
+            <!-- Courses will be dynamically populated based on the selected department -->
+        </select>
+        <br><br>
+
+
+        <label class="form-control" for="department">Purpose:</label>
+        <select id="purpose" name="purpose" onchange="updateCourses()" required>
+            <option value="" selected disabled>Select Purpose</option>
+            <option value="en">Enquiry</option>
+            <option value="cc">Place Order </option>
+            <option value="rt">Return</option>
+            <!-- Add more purpose as needed -->
+        </select>
+        <br><br>
+
+        <label  class="form-control">Material Provide</label ><br><br>
+         <input  type="checkbox" id="materialprovide" name="materialprovide">
+        <label>
+          Debit Note Book
+        </label>
+
+         <input  type="checkbox" id="pen" name="pen" >
+        <label>
+          Debit pen
+        </label>
+
+         <input  type="checkbox" id="exampaper" name="exampaper" >
+        <label>
+          Exam paper
+        </label><br><br>
+        <!-- Submit button -->
+        <input class="btn" type="submit" value="Submit">
+        <!-- my_template.html -->
+
+    </form><br><br>
+     <div class="alert alert-success" role="alert">
+      {% for msg in messages %}
+  {{msg}}<a href="/" class="alert-link">ClickHere</a>
+      {% endfor %}
+</div>
+</div>
+    <script>
+        // Sample course data for each department
+        const coursesByDepartment = {
+            CC: ["Bcom", "BBA", "MCOM"],
+            CS: ["Algorithms", "Software Engineering", "Artificial Intelligence"],
+            EE: ["Circuit Design", "Power Systems", "Control Systems"]
+            // Add more courses for each department as needed
+        };
+
+        function updateCourses() {
+            const departmentSelect = document.getElementById("department");
+            const courseSelect = document.getElementById("course");
+            const selectedDepartment = departmentSelect.value;
+
+            // Clear current courses
+            courseSelect.innerHTML = '<option value="" selected disabled>Select Course</option>';
+
+            // Populate courses based on the selected department
+            if (selectedDepartment in coursesByDepartment) {
+                coursesByDepartment[selectedDepartment].forEach(course => {
+                    const option = document.createElement("option");
+                    option.value = course;
+                    option.text = course;
+                    courseSelect.add(option);
+                });
+            }
+        }
+
+         function submitForm(event) {
+            event.preventDefault(); // Prevents the default form submission behavior
+
+            // Display a message (you can customize this part)
+            alert("Form submitted successfully!");
+
+            // You can add more logic here, such as sending the form data to a server
+        }
+    </script>
+
+</body>
+</html>
+
+
+<!--&lt;!&ndash; student_form.html &ndash;&gt;-->
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Student Details Form</title>-->
+<!--    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>-->
+<!--    <script>-->
+<!--        $(document).ready(function () {-->
+<!--            $('#department-select').change(function () {-->
+<!--                var departmentId = $(this).val();-->
+<!--                $.ajax({-->
+<!--                    url: '{{ "get_courses" }}',-->
+<!--                    data: {'department_id': departmentId},-->
+<!--                    dataType: 'json',-->
+<!--                    success: function (data) {-->
+<!--                        var courseSelect = $('#course-select');-->
+<!--                        courseSelect.empty();-->
+<!--                        $.each(data.courses, function (key, value) {-->
+<!--                            courseSelect.append('<option value="' + key + '">' + value + '</option>');-->
+<!--                        });-->
+<!--                    }-->
+<!--                });-->
+<!--            });-->
+<!--        });-->
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--    <h2>Student Details Form</h2>-->
+
+<!--    <form method="post" action="student_form">-->
+<!--        {% csrf_token %}-->
+
+<!--        {{ form.as_p }}-->
+
+<!--        <input type="submit" value="Submit">-->
+<!--    </form>-->
+
+<!--</body>-->
+<!--</html>-->

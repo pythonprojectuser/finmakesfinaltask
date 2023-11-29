@@ -1,0 +1,11 @@
+<h1>Register</h1><br/>
+<body>
+<form action="register" method="POST">
+    {% csrf_token %}
+    {{ form.as_table }}
+        <input type="submit">
+</form>
+{% for msg in messages %}
+<h1> {{msg}}</h1>
+{% endfor %}
+</body>

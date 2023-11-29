@@ -1,0 +1,47 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkbox</title>
+</head>
+<body>
+<form action="" method="post">
+{%csrf_token%}
+
+    <input type="date" value="dob" id="dob" name="dob">
+    <label for="dob">DOB</label><br>
+
+     <label for="dob">Age</label>
+    <input type="text" name="Age" ><br>
+ <label for="dob">Gender</label>
+  <input type="radio" name="gender" value="male" >Male<input type="radio" name="gender" value="female" >Female<br>
+ <label for="dob">PhoneNumber</label>
+    <input type="text" name="phone" maxlength="10" ><br>
+   <label for="dob">Email</label>
+    <input type="email" name="email" ><br>
+    <label for="dob">address</label>
+    <input type="text" name="address_box"  ><br>
+
+    <div class="form-check">
+
+        <h5>Checkbox_report</h5>
+        <input type="checkbox" value="Executive_summary" id="Executive_summary" name="checkbox_data">
+        <label for="Executive_summary"> Executive summary &nbsp</label>
+        <input type="checkbox" value="Scope" id="Scope" name="checkbox_data">
+        <label for="Scope"> Scope &nbsp</label>
+        <input type="checkbox" value="ISMS" id="ISMS" name="checkbox_data">
+        <label for="ISMS"> ISMS &nbsp</label>
+        <input type="checkbox" value="Methodology" id="Methodology" name="checkbox_data">
+        <label for="Methodology"> Methodology &nbsp</label>
+        <input type="checkbox" value="Recommendation" id="Recommendation" name="checkbox_data">
+        <label for="Recommendation"> Recommendation &nbsp</label>
+
+    </div>
+ <button type="submit">submit</button>
+</form>
+</body>
+</html>
+
+
